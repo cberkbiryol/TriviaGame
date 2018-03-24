@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="assets/css/reset.css" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Exo|Faster+One|Offside|Roboto+Mono" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css" type="text/css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" defer></script>
+    <script type="text/javascript" src="assets/javascript/app.js" defer></script>
+    <title>F1 Trivia Game</title>
+</head>
+
+<body>
+    <audio id="beep1" preload="auto" src="assets/audio/beep.ogg"></audio>
+    <main>
+        <header>
+            <span>F1 Trivia</span>
+        </header>
+        <div id="maindiv">
+            <div id="timediv">
+                <p>Time Remaining:
+                    <span id="timer">00:00</span>
+                 </p>
+            </div>
+            <div>                
+                <p id="question">
+                    ...
+                </p>
+                <button ID="start">START</button>
+            </div>
+            <div id="multiChoice">
+                <p class="choice"> ... </p>
+                <p class="choice"> ... </p>
+                <p class="choice"> ... </p>
+                <p class="choice"> ... </p>
+            </div>
+            <div id="statdiv">
+                <p>Question:
+                    <p>
+                        <span id="nQ">...</span>
+                    </p>
+                </p>
+                <p># Correct:
+                    <p>
+                        <span id="nWin">...</span>
+                    </p>
+                </p>
+                <p># Wrong:
+                     <p>
+                        <span id="nLoss">...</span>
+                     </p>
+                 </p>
+                 <p># No Answer:
+                    <p>
+                        <span id="nNot">...</span>
+                    </p>
+                 </p>
+            </div>            
+        </div>
+    </main>
+</body>
+
+</html>
