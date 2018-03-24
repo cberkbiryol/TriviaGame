@@ -60,7 +60,7 @@ var f1game = {
     nWins:0,
     nLoss:0,
     nNoAns:0,
-    TimePerQ:10000,
+    TimePerQ:15000,
     currentTimer:this.TimePerQ,
     tmr:0,
     askquestion: function() {
