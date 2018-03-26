@@ -63,6 +63,8 @@ var f1game = {
     TimePerQ:15000,
     currentTimer:this.TimePerQ,
     tmr:0,
+    tmrcolor:0,
+    resptimes:[],
     askquestion: function() {
         $("#question").text(f1game.questions[f1game.currentQIndx]); // question
         $(".choice").each( function(i) {
@@ -72,11 +74,10 @@ var f1game = {
     },
     startTimer: function() {
         f1game.tmr=setInterval(function(){   //Update time interval and keep an eye on it     
-            f1game.displayTimer();    
+            f1game.displayTimer();      
             if (f1game.currentTimer>0) {               
-                f1game.currentTimer-=10;
-            } else {                         // Means time ran out
-                f1game.resetTimer(); 
+                f1game.currentTimer-=10;                
+            } else {                         // Means time ran out               
                 f1game.caseTimeup();
             }
         },10)        
@@ -100,16 +101,24 @@ var f1game = {
             this.statUpdate();
             $("#multiChoice").toggle();
             $("#timediv").toggle();
-            var stattxt=$("#statdiv").html();
+            // var stattxt=$("#statdiv").html();
             $("#statdiv").slideToggle(); 
-            $("#question").html(stattxt);
+            // $("#question").html(stattxt);
+            $("#question").html(`<h1> Game Completed! </h1>
+                <p> Number of Questions: ${this.questions.length} </p>
+                <p> Average Response Time: ${(this.resptimes.reduce((p,c)=>p+c)/this.resptimes.length).toFixed(2)} seconds</p>
+                <p> Number of Correct Answers: ${this.nWins} </p>
+                <p> Number of Wrong Answers: ${this.nLoss} </p>
+                <p> Number of Unanswered Questions: ${this.nNoAns}</p>                
+                `).css({"font-size":"2.8rem","color":"blue","line-height":"5rem"})
             setTimeout(function() {
                 $("#question").slideToggle();                
-                $("#question").text("CLICK THE BUTTON TO RESTART THE F1 TRIVIA GAME!");
+                $("#question").text("CLICK THE BUTTON TO RESTART THE F1 TRIVIA GAME!")
+                              .css({"font-size":"2.0rem","color":"darkblue","line-height":"4rem"});
                 f1game.resetAll();
                 $("#question").slideToggle(function() {
                     $("#start").text("Restart").slideToggle()});    
-            },5000);             
+            },10000);             
         }
     },
     statUpdate: function() {
@@ -133,10 +142,14 @@ var f1game = {
     resetTimer: function() {       
         this.currentTimer=this.TimePerQ;
         this.displayTimer();
+        $("#timer").css("color","rgb(0,0,0)");
+        this.tmrcolor=0;
     },
     displayTimer: function() {
         var tmr= [Math.floor(this.currentTimer/1000)].toString().padStart(2,"0") + ":" + [(this.currentTimer/10)%100].toString().padStart(2,"0");
-        $("#timer").text(tmr);
+        this.tmrcolor+=(255/(f1game.TimePerQ/10)); 
+        var RRR= Math.round(this.tmrcolor)-1;
+        $("#timer").text(tmr).css("color","rgb(" + RRR + ",0,0)"); 
      },
      dispOutcome: function(msg) {
         clearInterval(this.tmr);  // Timer needs to stop as soon as we answer ot time is up
@@ -155,8 +168,9 @@ var f1game = {
                 $("#f1img").remove(); // We need to remove it to avoid inflation of the html eventhough it is hidden
                 $("#multiChoice").toggle();
                 $("#question").css("font-size","2rem")
+                f1game.resptimes.push((f1game.TimePerQ-f1game.currentTimer)/1000);
                 f1game.proceed();}) // This propagates the process
-        },5000);
+        },7000);
      },
      resetAll: function() {
         this.resetTimer();
